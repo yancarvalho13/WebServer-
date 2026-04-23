@@ -1,3 +1,4 @@
+#include "RouteEngine.h"
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
@@ -13,25 +14,6 @@
 #include <vector>
 #include <sstream>
 using namespace std;
-
-
-class Request {
-  public:
-    Request(string metodo, string path, string url)
-    {
-      _metodo = metodo;
-      _path = path;
-      _url = url;
-    }
-
-    void to_string()
-    {
-      cout << _metodo  << " From: " << _url << " Requesting: " << _path << endl;
-    }
-
-  private:
-    std::string _metodo, _path, _url;
-};
 
 vector<string> getWords(string line)
 {
@@ -49,10 +31,7 @@ vector<string> getWords(string line)
 
 Request HttpRequestParseer(char buffer[], int size)
 {
-
   vector<string> lines;
-  
-
   std::string msg = "";
   for(int i = 0; i < size; i++)
   {
@@ -83,7 +62,6 @@ Request HttpRequestParseer(char buffer[], int size)
     cout << "LogRequestParseer: " << line << endl;
   }
   return  parsedRequest;
-
 }
 
 string HtmlToString(const string& path)
@@ -106,11 +84,8 @@ string HtmlToString(const string& path)
     "Content-Length: " + to_string(html.size()) + "\r\n"
     "Connection: close\r\n"
     "\r\n"
-    + html;
-
-  return response;
+    + html; return response;
 }
-
 
 int main()
 {
