@@ -61,7 +61,7 @@ int main()
 
   const char* msgBuffer = responseDta.data(); 
   
-  write(clientSocketFileDescriptor, msgBuffer, responseDta.size()); 
+  write(clientSocketFileDescriptor, msgBuffer, strlen(msgBuffer)); 
   
   close(clientSocketFileDescriptor);
   }
