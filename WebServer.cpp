@@ -35,12 +35,14 @@ int main()
     perror("Falha no listen do socket");
     return 1;
   };
-  Route* route = new Route(Methods::GET,"/");
-  route->setHtmlResponse("html/home.html");
-
+  Route* home = new Route(Methods::GET,"/");
+  home->setHtmlResponse("html/home.html");
+  Route* about = new Route(Methods::GET, "/about");
+  about->setHtmlResponse("html/about.html");
   RouteHandler routeHandler;
 
-  routeHandler.mapRoute(*route); 
+  routeHandler.mapRoute(*home);
+  routeHandler.mapRoute(*about);
   
   char buffer[1024] = {0};
 
