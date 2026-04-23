@@ -1,4 +1,5 @@
 #include "headers/Route.h"
+#include "headers/RouteEngineHelpers.h"
 Route::Route(Methods metodo, std::string path) 
 {
  _metodo = metodo;
@@ -17,7 +18,7 @@ Methods Route::getMethod()
 
 void Route::setHtmlResponse(std::string path)
 {
-
+  _response = parseHtmlToString(path);
 };
 
 std::string Route::getRouteResponse()

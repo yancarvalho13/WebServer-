@@ -3,6 +3,7 @@
 #include <string>
 class Request {
   public:
+    Request();
     Request(Methods metodo,std::string path, std::string url);
     Request fromHttpRequest(char buffer[] ,int size);
     std::string getPath();

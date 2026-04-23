@@ -1,17 +1,20 @@
 #include "headers/Request.h"
 #include "headers/RouteEngineEnums.h"
 #include "headers/RouteEngineHelpers.h"
-#include <iostream>
-#include <ostream>
 #include <string>
 #include <vector>
-#include <Web>
+
 Request::Request(Methods metodo, std::string path, std::string url)
 { 
   _metodo = metodo;
   _path = path;
   _url = url;
 }
+
+Request::Request()
+{
+
+};
 
 Request Request::fromHttpRequest(char buffer[], int size)
 {
@@ -45,10 +48,10 @@ Request Request::fromHttpRequest(char buffer[], int size)
 
   Request parsedRequest(metodo, path, url);
   parsedRequest.to_string();
-  for(std::string line : lines)
-  {
-    std::cout << "LogRequestParseer: " << line << std::endl;
-  }
+  // for(std::string line : lines)
+  // {
+  //   std::cout << "LogRequestParseer: " << line << std::endl;
+  // }
   return  parsedRequest;
 }
 
