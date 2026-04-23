@@ -2,8 +2,10 @@
 #include "headers/Route.h"
 #include "headers/RouteEngine.h"
 #include "headers/RouteEngineEnums.h"
+#include <asm-generic/socket.h>
 #include <cstdio>
 #include <cstring>
+#include <stdexcept>
 #include <string>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -16,7 +18,10 @@ using namespace std;
 
 int main()
 {
+ try{ 
   int serverSocketFileDescriptor = socket(AF_INET,SOCK_STREAM,0);
+  int option = 1;
+  setsockopt(serverSocketFileDescriptor, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
   sockaddr_in serverAddress;
   /*AF_INET representa a familia do endereço, no caso IPV4*/
   serverAddress.sin_family = AF_INET;
@@ -37,6 +42,7 @@ int main()
   };
   Route* home = new Route(Methods::GET,"/");
   home->setHtmlResponse("html/home.html");
+
   Route* about = new Route(Methods::GET, "/about");
   about->setHtmlResponse("html/about.html");
   RouteHandler routeHandler;
@@ -44,7 +50,7 @@ int main()
   routeHandler.mapRoute(*home);
   routeHandler.mapRoute(*about);
   
-  char buffer[1024] = {0};
+  char buffer[4086] = {0};
 
   while (true)
   {
@@ -56,15 +62,19 @@ int main()
   request = request.fromHttpRequest(buffer, bytes); 
   
   Response response = routeHandler.handleRequest(request); 
-
+  
   std::string responseDta = response.getData();
 
   const char* msgBuffer = responseDta.data(); 
-  
+     
   write(clientSocketFileDescriptor, msgBuffer, strlen(msgBuffer)); 
   
   close(clientSocketFileDescriptor);
   }
 
   close(serverSocketFileDescriptor);
+  }catch(std::invalid_argument ex)
+    {
+      perror(ex.what());
+    }
 }

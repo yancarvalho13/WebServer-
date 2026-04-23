@@ -1,4 +1,5 @@
 #include "headers/RouteEngine.h"
+#include "headers/RouteEngineHelpers.h"
 #include <cstdio>
 #include <stdexcept>
 #include <string>
@@ -27,7 +28,7 @@ Route RouteHandler::getRoute(std::string path)
 
 Response RouteHandler::handleRequest(Request request)
 {
-    Route* route; 
+    Route* route = nullptr; 
     for(Route& routeItem : _routes)
     {
       if(routeItem.getPath() == request.getPath() && routeItem.getMethod() == request.getMethod())
@@ -35,11 +36,15 @@ Response RouteHandler::handleRequest(Request request)
           route = &routeItem; 
       }
     }
+
+    Response response;
+
     if(route == nullptr)
     {
-      throw std::invalid_argument("Rota não encontada para o caminho: " + request.getPath());
+      std::string routeResponse = parseHtmlToString("assets/notfound.html");
+      response.setData(routeResponse);
+      return response;
     }
-    Response response;
     response.setData(route->getRouteResponse());
     return response;
 }
