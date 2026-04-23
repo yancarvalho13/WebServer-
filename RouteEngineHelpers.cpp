@@ -1,5 +1,7 @@
 #include "headers/RouteEngineEnums.h"
 #include <fstream>
+#include <iostream>
+#include <ostream>
 #include <sstream>
 #include <map>
 #include <vector>
@@ -37,6 +39,26 @@ std::vector<std::string> extractWords(std::string line)
   return words;
 }
 
+std::string methodToString(Methods method)
+{
+  if(method == Methods::GET)
+    return "GET";
+  
+  if(method == Methods::POST)
+    return "POST";
+ 
+  if(method == Methods::PUT)
+    return "PUT";
+ 
+  if(method == Methods::PATCH)
+    return "PATCH";
+ 
+  if(method == Methods::DELETE)
+    return "DELETE";
+
+  return "UNKNOWN";
+}
+
 std::string parseHtmlToString(std::string htmlPath)
 {
   std::ifstream file(htmlPath);
@@ -57,5 +79,7 @@ std::string parseHtmlToString(std::string htmlPath)
     "Content-Length: " + std::to_string(html.size()) + "\r\n"
     "Connection: close\r\n"
     "\r\n"
-    + html; return response;
+    + html; 
+  std::cout << "Html parseado: " << response << std::endl;
+  return response;
 }

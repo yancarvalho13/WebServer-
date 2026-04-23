@@ -1,6 +1,7 @@
 #include "headers/Request.h"
 #include "headers/RouteEngineEnums.h"
 #include "headers/RouteEngineHelpers.h"
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -63,4 +64,11 @@ std::string Request::getPath()
 Methods Request::getMethod()
 {
   return _metodo;
+}
+
+void Request::to_string()
+{
+  {
+    std::cout << methodToString(_metodo)  << " From: " << _url << " Requesting: " << _path << std::endl;
+  }
 }

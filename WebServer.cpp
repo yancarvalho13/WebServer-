@@ -54,9 +54,12 @@ int main()
   request = request.fromHttpRequest(buffer, bytes); 
   
   Response response = routeHandler.handleRequest(request); 
-  const char* msgBuffer = response.getData().data();
+
+  std::string responseDta = response.getData();
+
+  const char* msgBuffer = responseDta.data(); 
   
-  write(clientSocketFileDescriptor, msgBuffer, strlen(msgBuffer));
+  write(clientSocketFileDescriptor, msgBuffer, responseDta.size()); 
   
   close(clientSocketFileDescriptor);
   }
