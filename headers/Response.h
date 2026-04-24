@@ -5,6 +5,7 @@ class Response {
     Response();
     void setData(std::string);
     std::string getData();
+    void logResponse();
   private:
     std::string _responseData;
 };

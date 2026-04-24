@@ -9,6 +9,8 @@ class Request {
     std::string getPath();
     Methods getMethod();
     void to_string();
+    void setClientFD(int clientFD);
+    int getClientFD();
     // {
     //   std::cout << _metodo  << " From: " << _url << " Requesting: " << _path << std::endl;
     // }
@@ -16,4 +18,5 @@ class Request {
   private:
    Methods _metodo;
    std::string _path, _url;
+   int _clientFD;
 };

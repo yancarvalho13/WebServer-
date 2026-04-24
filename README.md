@@ -1,40 +1,67 @@
 # Simple C++ WebServer
 
-Servidor web simples feito em C++ usando sockets TCP e respostas HTTP básicas.
+Servidor web simples feito em C++ com sockets TCP e respostas HTTP montadas manualmente.
 
 ## O que ele faz
 
-- Escuta na porta `8080`
-- Recebe requisições HTTP simples
-- Faz o parse do método, caminho e host
-- Mapeia rotas para arquivos HTML
-- Retorna o conteúdo com headers HTTP
+- escuta conexoes HTTP na porta `8080`
+- recebe a requisicao do cliente pelo socket
+- faz parse basico do metodo e caminho
+- encontra a rota registrada em memoria
+- retorna HTML estatico com headers HTTP
+
+## Objetos principais
+
+- `WebServer`: inicia o socket do servidor, aceita conexoes, recebe a requisicao e envia a resposta ao cliente.
+- `Route`: representa uma rota HTTP com metodo, caminho e conteudo de resposta.
+- `RouteHandler`: registra as rotas e decide qual resposta retornar para cada request.
+- `Request`: faz o parse da requisicao HTTP recebida pelo servidor.
+- `Response`: encapsula o corpo final enviado ao cliente.
+- `RouteEngineHelpers`: contem helpers para converter metodo HTTP e montar resposta HTML.
+
+## Como usar
+
+O uso basico acontece no `Main.cpp`:
+
+```cpp
+Route* home = new Route(Methods::GET, "/");
+home->setHtmlResponse("html/home.html");
+
+WebServer* webServer = new WebServer(8080, 10);
+webServer->start();
+webServer->mapRoute(*home);
+```
+
+Fluxo:
+
+1. crie uma `Route` com metodo e caminho
+2. associe um arquivo HTML com `setHtmlResponse(...)`
+3. crie o `WebServer` informando porta e tamanho da fila de conexoes
+4. chame `start()` para iniciar o servidor
+5. registre as rotas com `mapRoute(...)`
 
 ## Rotas atuais
 
 - `GET /` -> `html/home.html`
 - `GET /about` -> `html/about.html`
+- `GET /portfolio` -> `assets/portfolio.html`
 
 ## Estrutura
 
-- `WebServer.cpp`: ponto de entrada e loop do servidor
-- `Request.cpp`: parse da requisição HTTP
-- `Response.cpp`: objeto de resposta
-- `Route.cpp`: definição de rota
-- `RouteEngine.cpp`: registro e busca de rotas
-- `RouteEngineHelpers.cpp`: helpers de método e leitura de HTML
-- `html/`: páginas HTML servidas pelo servidor
+- `Main.cpp`: configuracao inicial do servidor e mapeamento das rotas
+- `WebServer.cpp`: loop de conexao, leitura da request e escrita da response
+- `Request.cpp`: parse da requisicao HTTP
+- `Response.cpp`: objeto de resposta HTTP
+- `Route.cpp`: definicao da rota
+- `RouteEngine.cpp`: registro e resolucao de rotas
+- `RouteEngineHelpers.cpp`: helpers de metodo HTTP e leitura de HTML
+- `html/`: paginas HTML basicas
+- `assets/`: arquivos estaticos usados pelas rotas
 
-## Compilar
-
-```bash
-g++ WebServer.cpp Request.cpp Response.cpp Route.cpp RouteEngine.cpp RouteEngineHelpers.cpp -o main
-```
-
-## Executar
+## Build E Execucao
 
 ```bash
-./main
+cmake -S . -B build && cmake --build build && ./build/server
 ```
 
 Depois acesse no navegador:
@@ -42,10 +69,11 @@ Depois acesse no navegador:
 ```text
 http://localhost:8080
 http://localhost:8080/about
+http://localhost:8080/portfolio
 ```
 
-## Observações
+## Observacoes
 
-- Projeto didático e minimalista
-- Suporta rotas simples registradas manualmente no código
-- Atualmente serve HTML estático
+- projeto didatico e minimalista
+- rotas registradas manualmente no codigo
+- atualmente serve HTML estatico

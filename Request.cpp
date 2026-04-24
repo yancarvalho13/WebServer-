@@ -17,6 +17,16 @@ Request::Request()
 
 };
 
+void Request::setClientFD(int clientFD)
+{
+  _clientFD = clientFD;
+}
+
+int Request::getClientFD()
+{
+  return _clientFD;
+}
+
 Request Request::fromHttpRequest(char buffer[], int size)
 {
 

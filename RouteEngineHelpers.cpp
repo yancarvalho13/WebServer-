@@ -80,6 +80,5 @@ std::string parseHtmlToString(std::string htmlPath)
     "Connection: close\r\n"
     "\r\n"
     + html; 
-  std::cout << "Html parseado: " << response << std::endl;
   return response;
 }

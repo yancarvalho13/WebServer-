@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yan Carvalho | C++ Low Level</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0f0d;
+      --panel: #111714;
+      --line: #1e2a24;
+      --text: #d7e3da;
+      --muted: #8aa08f;
+      --accent: #73ffa0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    }
+
+    .wrap {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .terminal {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(115, 255, 160, 0.04), 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .bar {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #0d1310;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #294235;
+    }
+
+    .screen {
+      padding: 24px;
+    }
+
+    .prompt,
+    .cmd {
+      color: var(--accent);
+    }
+
+    h1,
+    h2 {
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 52px);
+      line-height: 1.05;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .hero,
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .status {
+      margin-top: 18px;
+      color: var(--accent);
+      min-height: 24px;
+    }
+
+    @media (max-width: 640px) {
+      .screen {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="terminal">
+      <div class="bar">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <div class="screen">
+        <section class="hero">
+          <div class="prompt">yan@backend:~$ ./server --about</div>
+          <h1>Eu criei este servidor em C++ com sockets porque gosto de entender o software perto do sistema operacional.</h1>
+          <p>
+            Curto baixo nivel, protocolo, performance e o tipo de codigo em que cada byte trafegado faz sentido.
+            Esta landing existe no mesmo servidor que eu escrevi usando sockets do kernel, roteamento proprio e resposta HTTP manual.
+          </p>
+          <p>
+            Minha experiencia passa por SDKs, APIs, sistemas distribuidos, comunicacao com hardware, RFID, biometria,
+            regras de negocio complexas e interfaces para operacao de sistemas criticos.
+          </p>
+          <div class="links">
+            <a href="https://github.com/yancarvalho13">github</a>
+            <a href="https://linkedin.com/in/yancarvalho13">linkedin</a>
+            <a href="mailto:yansilva303@gmail.com">email</a>
+          </div>
+          <div class="status"><span class="cmd">$</span> <span id="status">booting profile...</span></div>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <h2>experiencia.log</h2>
+            <ul>
+              <li>Desenvolvimento de APIs e SDKs para integracao com dispositivos biometricos e fluxos de alto volume.</li>
+              <li>Construcao de componentes de baixo nivel em C/C++ e adaptacao para C# .NET com interoperabilidade nativa no Windows.</li>
+              <li>Captura, processamento e transmissao de dados com foco em desempenho, confiabilidade e comunicacao com hardware.</li>
+              <li>Arquiteturas orientadas a eventos com streams, WebSockets, Kubernetes e NGINX para sistemas em tempo real.</li>
+              <li>Modelagem de regras de negocio complexas, rastreabilidade e interfaces operacionais com Blazor.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h2>projects.log</h2>
+            <ul>
+              <li>Construcao de sistema de manutencao que removeu processos em papel, com DDD, arquitetura hexagonal e suporte a multiplos bancos.</li>
+              <li>Sistema distribuido de rastreamento em tempo real com RFID, incluindo SDK em Java, leitura continua de eventos e tratamento de falhas de hardware.</li>
+              <li>Otimizacao de queries e eliminacao de N+1, autenticacao JWT por cargo, migracoes com Flyway e deploy containerizado.</li>
+              <li>Sistema escolar com regras aderentes a padroes nacionais, MVC, Clean Code, DTOs, seguranca por perfil e ajustes de memoria na JVM.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h2>educacao.log</h2>
+            <ul>
+              <li>Computacao na UFRB com foco em algoritmos, algebra linear, estatistica, banco de dados, IA, visao computacional e aprendizado por reforco.</li>
+              <li>Engenharia de Software na UCSAL com estrutura de dados, orientacao a objetos, sistemas distribuidos, arquitetura de computadores, redes, sistemas operacionais, testes e arquitetura de software.</li>
+            </ul>
+          </article>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const lines = [
+      "serving low level mindset on port 8080",
+      "socket() -> bind() -> listen() -> accept()",
+      "manual HTTP response dispatched",
+      "backend, hardware, protocol, kernel vibes"
+    ];
+
+    const status = document.getElementById("status");
+    let index = 0;
+
+    setInterval(() => {
+      status.textContent = lines[index % lines.length];
+      index += 1;
+    }, 1800);
+  </script>
+</body>
+</html>
